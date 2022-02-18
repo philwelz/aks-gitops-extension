@@ -9,7 +9,6 @@ This repository contains Bicep modules to deploy an basic Azure Kubernetes Servi
 ### General
 
 - AKS with MSI (Manged Service Identity)
-- 
 
 ### Azure CLI
 
