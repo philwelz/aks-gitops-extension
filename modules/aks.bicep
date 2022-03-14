@@ -56,13 +56,22 @@ resource flux 'Microsoft.KubernetesConfiguration/extensions@2021-09-01' = {
   name: 'flux'
   scope: aksCluster
   properties: {
+    autoUpgradeMinorVersion: true
+    configurationProtectedSettings: {}
+    configurationSettings: {
+      'helm-controller.enabled': 'true' // enabled by default
+      'source-controller.enabled': 'true' // enabled by default
+      'kustomize-controller.enabled': 'true' // enabled by default
+      'notification-controller.enabled': 'true' // enabled by default
+      'image-automation-controller.enabled': 'true' // disabled by default
+      'image-reflector-controller.enabled': 'true' // disabled by default
+    }
     extensionType: 'microsoft.flux'
     scope: {
       cluster: {
         releaseNamespace: 'flux-system'
       }
     }
-    autoUpgradeMinorVersion: true
   }
 }
 
@@ -70,7 +79,7 @@ resource flux 'Microsoft.KubernetesConfiguration/extensions@2021-09-01' = {
 // ######### Flux Config ##########
 // ################################
 
-resource fluxConfig 'Microsoft.KubernetesConfiguration/fluxConfigurations@2021-11-01-preview' = {
+resource fluxConfig 'Microsoft.KubernetesConfiguration/fluxConfigurations@2022-01-01-preview' = {
   name: 'flux-config'
   scope: aksCluster
   dependsOn: [
@@ -97,7 +106,6 @@ resource fluxConfig 'Microsoft.KubernetesConfiguration/fluxConfigurations@2021-1
         dependsOn: []
         timeoutInSeconds: 600
         syncIntervalInSeconds: 600
-        validation: 'server'
         prune: true
       }
     }
